@@ -6,59 +6,59 @@ using namespace std;
 
 class DoubleStack {
 private:
-    double* data;      // ï¿½ï¿½ï¿½Ú´æ´¢Õ»ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½
-    int capacity;      // Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    int topIndex;      // Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    double* data;      // ÓÃÓÚ´æ´¢Õ»Êý¾ÝµÄÊý×é
+    int capacity;      // Õ»µÄÈÝÁ¿
+    int topIndex;      // Õ»¶¥Ë÷Òý
 
 public:
-    // ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
+    // ¹¹Ôìº¯Êý
     DoubleStack(int capacity) {
         this->capacity = capacity;
         this->data = new double[capacity];
-        this->topIndex = -1;  // ï¿½ï¿½Ê¼ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª-1
+        this->topIndex = -1;  // ³õÊ¼»¯Õ»¶¥Ë÷ÒýÎª-1
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // Îö¹¹º¯Êý
     ~DoubleStack() {
         delete[] data;
     }
 
-    // Ñ¹Õ»ï¿½ï¿½ï¿½ï¿½
+    // Ñ¹Õ»²Ù×÷
     void push(double value) {
         if (topIndex < capacity - 1) {
             data[++topIndex] = value;
         } else {
-            cerr << "Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½Ñ¹Õ»!" << endl;
+            cerr << "Õ»ÒÑÂú£¬ÎÞ·¨Ñ¹Õ»!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½
+    // µ¯Õ»²Ù×÷
     double pop() {
         if (!isEmpty()) {
             return data[topIndex--];
         } else {
-            cerr << "Õ»Îªï¿½Õ£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Õ»!" << endl;
+            cerr << "Õ»Îª¿Õ£¬ÎÞ·¨µ¯Õ»!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½È¡Õ»ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // »ñÈ¡Õ»¶¥ÔªËØµ«²»µ¯³ö
     double peek() {
         if (!isEmpty()) {
             return data[topIndex];
         } else {
-            cerr << "Õ»Îªï¿½Õ£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½È¡Õ»ï¿½ï¿½Ôªï¿½ï¿½!" << endl;
+            cerr << "Õ»Îª¿Õ£¬ÎÞ·¨»ñÈ¡Õ»¶¥ÔªËØ!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½ï¿½Õ»ï¿½Ç·ï¿½Îªï¿½ï¿½
+    // ¼ì²éÕ»ÊÇ·ñÎª¿Õ
     [[nodiscard]] bool isEmpty() const {
         return topIndex == -1;
     }
 
-    // ï¿½ï¿½È¡Õ»ï¿½Ä´ï¿½Ð¡
+    // »ñÈ¡Õ»µÄ´óÐ¡
     [[nodiscard]] int size() const {
         return topIndex + 1;
     }
@@ -67,93 +67,93 @@ public:
 
 class CharStack {
 private:
-    char* data;      // ï¿½ï¿½ï¿½Ú´æ´¢Õ»ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½
-    int capacity;    // Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    int topIndex;    // Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    char* data;      // ÓÃÓÚ´æ´¢Õ»Êý¾ÝµÄÊý×é
+    int capacity;    // Õ»µÄÈÝÁ¿
+    int topIndex;    // Õ»¶¥Ë÷Òý
 
 public:
-    // ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
+    // ¹¹Ôìº¯Êý
     explicit CharStack(int capacity) {
         this->capacity = capacity;
         this->data = new char[capacity];
-        this->topIndex = -1;  // ï¿½ï¿½Ê¼ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª-1
+        this->topIndex = -1;  // ³õÊ¼»¯Õ»¶¥Ë÷ÒýÎª-1
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // Îö¹¹º¯Êý
     ~CharStack() {
         delete[] data;
     }
 
-    // Ñ¹Õ»ï¿½ï¿½ï¿½ï¿½
+    // Ñ¹Õ»²Ù×÷
     void push(char value) {
         if (topIndex < capacity - 1) {
             data[++topIndex] = value;
         } else {
-            cerr << "Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½Ñ¹Õ»!" << endl;
+            cerr << "Õ»ÒÑÂú£¬ÎÞ·¨Ñ¹Õ»!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½
+    // µ¯Õ»²Ù×÷
     char pop() {
         if (!isEmpty()) {
             return data[topIndex--];
         } else {
-            cerr << "Õ»Îªï¿½Õ£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Õ»!" << endl;
+            cerr << "Õ»Îª¿Õ£¬ÎÞ·¨µ¯Õ»!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½È¡Õ»ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // »ñÈ¡Õ»¶¥ÔªËØµ«²»µ¯³ö
     char peek() {
         if (!isEmpty()) {
             return data[topIndex];
         } else {
-            cerr << "Õ»Îªï¿½Õ£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½È¡Õ»ï¿½ï¿½Ôªï¿½ï¿½!" << endl;
+            cerr << "Õ»Îª¿Õ£¬ÎÞ·¨»ñÈ¡Õ»¶¥ÔªËØ!" << endl;
             exit(1);
         }
     }
 
-    // ï¿½ï¿½ï¿½Õ»ï¿½Ç·ï¿½Îªï¿½ï¿½
+    // ¼ì²éÕ»ÊÇ·ñÎª¿Õ
     [[nodiscard]] bool isEmpty() const {
         return topIndex == -1;
     }
 
-    // ï¿½ï¿½È¡Õ»ï¿½Ä´ï¿½Ð¡
+    // »ñÈ¡Õ»µÄ´óÐ¡
     [[nodiscard]] int size() const {
         return topIndex + 1;
     }
 };
 string getString() {
-    ifstream inputFile("test.txt"); // ï¿½ï¿½ï¿½Ä¼ï¿½
+    ifstream inputFile("test.txt"); // ´ò¿ªÎÄ¼þ
 
     if (!inputFile) {
-        cerr << "ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½!" << endl;
+        cerr << "ÎÞ·¨´ò¿ªÎÄ¼þ!" << endl;
         return "error";
     }
 
     string line;
     while (getline(inputFile, line)) {
-        // cout << line << endl; // ï¿½ï¿½ï¿½Ð¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
+        // cout << line << endl; // ÖðÐÐ¶ÁÈ¡²¢Êä³öÎÄ¼þÄÚÈÝ
     }
 
-    inputFile.close(); // ï¿½Ø±ï¿½ï¿½Ä¼ï¿½
+    inputFile.close(); // ¹Ø±ÕÎÄ¼þ
     return line;
 }
 
 
-//ï¿½ï¿½×ºï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½×ºï¿½ï¿½ï¿½ï¿½Ê½
+//ÖÐ×º±í´ïÊ½±äºó×º±í´ïÊ½
 char* convert(string origin) {\
-    // CharStack 
-    // int i=0;
-    // while(origin[i] != '\0') {
-    //     if(origin[i] > '')
-    // }
+    CharStack 
+    int i=0;
+    while(origin[i] != '\0') {
+        if(origin[i] > '')
+    }
 
 }
 
 
-//ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ ï¿½ï¿½Îªï¿½Ö·ï¿½ 
+//±í´ïÊ½´Ó×Ö·û´® ±äÎª×Ö·û 
 
 
 int main() {
@@ -162,7 +162,7 @@ int main() {
 
     CharStack charstack(100);
     int i=0;
-    //Ñ¹Õ»ï¿½ï¿½ï¿½ï¿½
+    //Ñ¹Õ»²âÊÔ
     while(expression[i] != '\0') {
         cout << expression[i];
         charstack.push(expression[i]);
@@ -172,7 +172,7 @@ int main() {
     cout << endl;
 
 
-    //ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½
+    //µ¯Õ»²âÊÔ
     while(!charstack.isEmpty()) {
         cout << charstack.pop();
     }
