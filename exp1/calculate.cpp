@@ -144,11 +144,11 @@ string getString() {
 
 //中缀表达式变后缀表达式
 char* convert(string origin) {\
-    CharStack 
-    int i=0;
-    while(origin[i] != '\0') {
-        if(origin[i] > '')
-    }
+    // CharStack 
+    // int i=0;
+    // while(origin[i] != '\0') {
+    //     if(origin[i] > '')
+    // }
 
 }
 

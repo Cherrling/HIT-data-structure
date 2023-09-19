@@ -44,10 +44,10 @@ public:
         Node *current = head;
         while (current)
         {
-            std::cout << current->data << " -> ";
+            cout << current->data << " -> ";
             current = current->next;
         }
-        std::cout << "nullptr" << std::endl;
+        cout << "nullptr" << endl;
     }
     Node *returnnext(Node *p)
     {
@@ -271,25 +271,25 @@ float str_float(string str)
 int main()
 {
     string mid;
-    std::ifstream file("index.txt"); // 打开文件以供读取
+    ifstream file("index.txt"); // 打开文件以供读取
 
     if (!file.is_open())
     {
-        std::cerr << "无法打开文件" << std::endl;
+        cerr << "无法打开文件" << endl;
         return 1;
     }
 
-    std::string line;
+    string line;
 
     // 读取第一行内容
-    if (std::getline(file, line))
+    if (getline(file, line))
     {
         mid = line;
-        std::cout << "第一行内容: " << line << std::endl;
+        cout << "第一行内容: " << line << endl;
     }
     else
     {
-        std::cerr << "文件为空" << std::endl;
+        cerr << "文件为空" << endl;
     }
 
     file.close(); // 关闭文件
