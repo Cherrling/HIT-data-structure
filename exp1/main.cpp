@@ -415,7 +415,7 @@ int main()
             break;
         }
     }
-    cout<<"res：";
+    cout<<"res:";
     cout << FloatStack.pop();
 
     return 0;
