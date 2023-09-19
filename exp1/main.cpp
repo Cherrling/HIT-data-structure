@@ -246,9 +246,14 @@ bool isOperator(char c)
 float str_float(string str)
 {
     int dot = 0;
+    int x=1;
     for (auto &&i : str)
     {
-        if (i == '.')
+        if (i=='-')
+        {
+            x=-1;
+        }
+        else if (i == '.')
         {
             break;
         }
@@ -261,13 +266,13 @@ float str_float(string str)
     int i = 0;
     for (auto &&c : str)
     {
-        if (c != '.')
+        if (c != '.'&&c!='-')
         {
             n += (int)(c - 48) * pow(10, dot - i - 1);
             i++;
         }
     }
-    return n;
+    return n*x;
 }
 
 int main()
@@ -314,23 +319,18 @@ int main()
         }
         else
         {
-            char aaa = mid[i];
-            if (temp != "")
+            if (temp==""&&mid[i]=='-')
+            {
+                temp+=mid[i];
+                continue;
+            }
+            else if (temp != "")
             {
                 List.append(1, temp);
                 List.print();
+                temp = "";
             }
-            temp = "";
-            if (CharStack.isEmpty() || CharStack.peek() == '(')
-            {
-                CharStack.push(mid[i]);
-            }
-            else if (mid[i] == '(')
-            {
-                CharStack.push(mid[i]);
-            }
-
-            else if (mid[i] == ')')
+            if (mid[i] == ')')
             {
                 while (!CharStack.isEmpty() && CharStack.peek() != '(')
                 {
@@ -338,6 +338,16 @@ int main()
                     List.print();
                 }
                 CharStack.pop();
+            }
+            
+            else if (mid[i] == '(')
+            {
+                CharStack.push(mid[i]);
+            }
+
+            else if (CharStack.isEmpty() || CharStack.peek() == '(')
+            {
+                CharStack.push(mid[i]);
             }
             else if (isOperator(mid[i]))
             {
