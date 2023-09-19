@@ -278,6 +278,7 @@ float str_float(string str)
 int main()
 {
     string mid;
+    // ifstream file("C:\\Code\\HIT-data-structure\\exp1\\index.txt"); // 打开文件以供读取
     ifstream file("index.txt"); // 打开文件以供读取
 
     if (!file.is_open())
