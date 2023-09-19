@@ -21,6 +21,7 @@ public:
     void append(bool isNum, string value)
     {
         // cout<<value<<endl;
+
         Node *newNode = new Node{isNum, value, nullptr};
 
         if (!head)
@@ -44,10 +45,11 @@ public:
         Node *current = head;
         while (current)
         {
-            cout << current->data << " -> ";
+            cout << current->data << " ";
             current = current->next;
         }
-        cout << "nullptr" << endl;
+        cout<<endl;
+        // cout << "nullptr" << endl;
     }
     Node *returnnext(Node *p)
     {
@@ -75,12 +77,13 @@ public:
 private:
     Node *head;
 };
+
 class FloatStack
 {
 private:
-    float *data;  // 用于存储栈数据的数组
-    int capacity; // 栈的容量
-    int topIndex; // 栈顶索引
+    float *data;  
+    int capacity; 
+    int topIndex; 
 
 public:
     // 构造函数
@@ -134,7 +137,7 @@ public:
         }
         else
         {
-            cerr << "栈为空，无法获取栈顶元素!" << endl;
+            cerr << "栈为空!" << endl;
             exit(1);
         }
     }
@@ -154,9 +157,9 @@ public:
 class CharStack
 {
 private:
-    char *data;   // 用于存储栈数据的数组
-    int capacity; // 栈的容量
-    int topIndex; // 栈顶索引
+    char *data;   
+    int capacity; 
+    int topIndex; 
 
 public:
     // 构造函数
@@ -267,7 +270,6 @@ float str_float(string str)
     return n;
 }
 
-
 int main()
 {
     string mid;
@@ -312,25 +314,28 @@ int main()
         }
         else
         {
-            char aaa=mid[i];
+            char aaa = mid[i];
             if (temp != "")
             {
                 List.append(1, temp);
+                List.print();
             }
             temp = "";
             if (CharStack.isEmpty() || CharStack.peek() == '(')
             {
                 CharStack.push(mid[i]);
-            }else if (mid[i]=='(')
+            }
+            else if (mid[i] == '(')
             {
                 CharStack.push(mid[i]);
             }
-            
+
             else if (mid[i] == ')')
             {
                 while (!CharStack.isEmpty() && CharStack.peek() != '(')
                 {
                     List.append(0, string(1, CharStack.pop()));
+                    List.print();
                 }
                 CharStack.pop();
             }
@@ -339,6 +344,7 @@ int main()
                 while (!CharStack.isEmpty() && first(mid[i]) <= first(CharStack.peek()))
                 {
                     List.append(0, string(1, CharStack.pop()));
+                    List.print();
                 }
                 CharStack.push(mid[i]);
             }
@@ -347,16 +353,17 @@ int main()
     if (temp != "")
     {
         List.append(1, temp);
+        List.print();
     }
     while (!CharStack.isEmpty())
     {
         List.append(0, string(1, CharStack.pop()));
+        List.print();
     }
 
-    List.print();
+    // List.print();
 
-
-    FloatStack FloatStack(100);
+    FloatStack FloatStack(65535);
     Node *p = List.returnnext(NULL);
     while (1)
     {
@@ -366,36 +373,39 @@ int main()
         }
         else
         {
-            float a,b;
-            b=FloatStack.pop();
-            a=FloatStack.pop();
+            float a, b;
+            b = FloatStack.pop();
+            a = FloatStack.pop();
 
-            if (p->data=="+")
+            if (p->data == "+")
             {
-                FloatStack.push(a+b);
-            }else if (p->data=="-")
+                FloatStack.push(a + b);
+            }
+            else if (p->data == "-")
             {
-                FloatStack.push(a-b);
-            }else if (p->data=="*")
+                FloatStack.push(a - b);
+            }
+            else if (p->data == "*")
             {
-                FloatStack.push(a*b);
-            }else if (p->data=="/")
+                FloatStack.push(a * b);
+            }
+            else if (p->data == "/")
             {
-                FloatStack.push(a/b);
+                FloatStack.push(a / b);
             }
         }
 
         if (p->next != NULL)
         {
-            p=List.returnnext(p);
-        }else
+            p = List.returnnext(p);
+        }
+        else
         {
             break;
         }
-        
     }
-
-    cout<<FloatStack.pop();
+    cout<<"res：";
+    cout << FloatStack.pop();
 
     return 0;
 }
