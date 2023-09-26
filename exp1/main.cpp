@@ -275,6 +275,29 @@ float str_float(string str)
     return n*x;
 }
 
+
+
+void printstack(FloatStack& s1 ,FloatStack& showstack){
+    while (!s1.isEmpty()) {
+        showstack.push(s1.pop());
+    }
+    while (!showstack.isEmpty()) {
+        float x = showstack.pop();
+        s1.push(x);
+        cout<<x<<" ";
+    }
+    // cout<<endl;
+
+
+
+
+
+}
+
+
+
+
+
 int main()
 {
     string mid;
@@ -375,18 +398,24 @@ int main()
     // List.print();
 
     FloatStack FloatStack(65535);
+
+    class FloatStack showstack(65535);
+
+    cout<<"calc:"<<endl;
     Node *p = List.returnnext(NULL);
     while (1)
     {
         if (p->isNum)
         {
             FloatStack.push(str_float(p->data));
+            cout<<endl;
         }
         else
         {
             float a, b;
             b = FloatStack.pop();
             a = FloatStack.pop();
+            cout<<p->data<<endl;
 
             if (p->data == "+")
             {
@@ -405,6 +434,7 @@ int main()
                 FloatStack.push(a / b);
             }
         }
+        printstack(FloatStack, showstack);
 
         if (p->next != NULL)
         {
@@ -415,6 +445,7 @@ int main()
             break;
         }
     }
+    cout<<endl;
     cout<<"res:";
     cout << FloatStack.pop();
 

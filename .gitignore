@@ -1,3 +1,8 @@
 *.exe
 exp1/main.exe
 HIT-data-structure.zip
+exp1/main.exe
+.vscode/.vscode.zip
+.vscode/launch.json
+.vscode/tasks.json
+.vscode
