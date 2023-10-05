@@ -44,6 +44,13 @@ public:
         destroy(root);
     }
 
+    TreeNode* getroot(){
+        return root;
+    }
+
+
+
+
     // void create(string str)
     // {
     // //A(B(D,E(G,)),C(,F))#
@@ -104,6 +111,66 @@ public:
         }
     }
 
+    void pre_create(TreeNode*& curr, string& str, int& index)
+    {
+        // ABD#G###CE###
+        if (index >= str.length()) {
+            return;
+        }
+        if (str[index] == '#') {
+            curr = nullptr;
+            index++;
+        } else {
+
+            curr = new TreeNode(str[index]);
+            index++;
+            pre_create(curr->left, str, index);
+            pre_create(curr->right, str, index);
+        }
+    }
+    void pre_create(string str)
+    {
+        int index = 0;
+        pre_create(root, str, index);
+    }
+
+    void pre(TreeNode* curr){
+        if (curr==nullptr) {
+            return;
+        }
+        cout<<curr->data<<" ";
+        pre(curr->left);
+        pre(curr->right);
+    }
+    void mid(TreeNode* curr){
+        if (curr==nullptr) {
+            return;
+        }
+        pre(curr->left);
+        cout<<curr->data<<" ";
+        pre(curr->right);
+    }
+    void post(TreeNode* curr){
+        if (curr==nullptr) {
+            return;
+        }
+        pre(curr->left);
+        pre(curr->right);
+        cout<<curr->data<<" ";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     void PrintTree(TreeNode* n, bool left, string const& indent)
     {
         if (n->right) {
@@ -139,7 +206,8 @@ public:
 int main()
 {
     BTree BT;
-    BT.create("A(B(D,E(G,)),C(,F))#");
+    // BT.create("A(B(D,E(G,)),C(,F))#");
+    BT.pre_create("ABD#G###CE###");
     BT.PrintTree();
     return 0;
 }
