@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -218,6 +219,26 @@ public:
         }
     }
 
+    void up_down(){
+        queue<TreeNode*> q;
+        TreeNode* curr=root;
+        q.push(curr);
+        while (!q.empty()) {
+            curr=q.front();
+            q.pop();
+                cout<<curr->data<<" ";
+            if (curr->left!=nullptr) {
+                q.push(curr->left);
+            }
+            if (curr->right!=nullptr) {
+                q.push(curr->right);
+            }
+        }
+    
+    
+    }
+
+
     void PrintTree(TreeNode* n, bool left, string const& indent)
     {
         if (n->right) {
@@ -255,17 +276,18 @@ int main()
     BTree BT;
     // BT.create("A(B(D,E(G,)),C(,F))#");
     BT.pre_create("ABD#G###CE###");
-    BT.pre(BT.getroot());
-    cout << endl;
-    BT.pre_no_rec();
-    cout << endl;
-    BT.in(BT.getroot());
-    cout << endl;
-    BT.in_no_rec();
-    cout << endl;
-    BT.post(BT.getroot());
-    cout << endl;
-    BT.post_no_rec();
-    // BT.PrintTree();
+    // BT.pre(BT.getroot());
+    // cout << endl;
+    // BT.pre_no_rec();
+    // cout << endl;
+    // BT.in(BT.getroot());
+    // cout << endl;
+    // BT.in_no_rec();
+    // cout << endl;
+    // BT.post(BT.getroot());
+    // cout << endl;
+    // BT.post_no_rec();
+    BT.up_down();
+    BT.PrintTree();
     return 0;
 }
