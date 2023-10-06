@@ -44,12 +44,10 @@ public:
         destroy(root);
     }
 
-    TreeNode* getroot(){
+    TreeNode* getroot()
+    {
         return root;
     }
-
-
-
 
     // void create(string str)
     // {
@@ -134,42 +132,91 @@ public:
         pre_create(root, str, index);
     }
 
-    void pre(TreeNode* curr){
-        if (curr==nullptr) {
+    void pre(TreeNode* curr)
+    {
+        if (curr == nullptr) {
             return;
         }
-        cout<<curr->data<<" ";
+        cout << curr->data << " ";
         pre(curr->left);
         pre(curr->right);
     }
-    void mid(TreeNode* curr){
-        if (curr==nullptr) {
+    void in(TreeNode* curr)
+    {
+        if (curr == nullptr) {
             return;
         }
-        pre(curr->left);
-        cout<<curr->data<<" ";
-        pre(curr->right);
+        in(curr->left);
+        cout << curr->data << " ";
+        in(curr->right);
     }
-    void post(TreeNode* curr){
-        if (curr==nullptr) {
+    void post(TreeNode* curr)
+    {
+        if (curr == nullptr) {
             return;
         }
-        pre(curr->left);
-        pre(curr->right);
-        cout<<curr->data<<" ";
+        post(curr->left);
+        post(curr->right);
+        cout << curr->data << " ";
     }
 
+    void pre_no_rec()
+    {
+        TreeNode* curr = root;
+        stack<TreeNode*> s;
+        while (!(curr == nullptr && s.empty())) {
+            while (curr != nullptr) {
+                cout << curr->data << " ";
+                s.push(curr);
+                curr = curr->left;
+            }
+            if (!s.empty()) {
+                curr = s.top();
+                s.pop();
+                curr = curr->right;
+            }
+        }
+    }
 
+    void in_no_rec()
+    {
+        TreeNode* curr = root;
+        stack<TreeNode*> s;
+        while (!(curr == nullptr && s.empty())) {
+            while (curr != nullptr) {
+                s.push(curr);
+                curr = curr->left;
+            }
+            if (!s.empty()) {
+                curr = s.top();
+                cout << curr->data << " ";
+                s.pop();
+                curr = curr->right;
+            }
+        }
+    }
 
+    void post_no_rec()
+    {
+        TreeNode* curr = root;
+        TreeNode* lastvisited = nullptr;
+        stack<TreeNode*> s;
+        // s.push(root);
+        while (curr != nullptr || !s.empty()) {
+            while (curr != nullptr) {
+                s.push(curr);
+                curr = curr->left;
+            }
 
-
-
-
-
-
-
-
-
+            if (s.top()->right == nullptr || s.top()->right == lastvisited) {
+                cout << s.top()->data << " ";
+                lastvisited = s.top();
+                s.pop();
+            } else {
+                curr = s.top()->right;
+            }
+        }
+    }
 
     void PrintTree(TreeNode* n, bool left, string const& indent)
     {
@@ -208,6 +255,17 @@ int main()
     BTree BT;
     // BT.create("A(B(D,E(G,)),C(,F))#");
     BT.pre_create("ABD#G###CE###");
-    BT.PrintTree();
+    BT.pre(BT.getroot());
+    cout << endl;
+    BT.pre_no_rec();
+    cout << endl;
+    BT.in(BT.getroot());
+    cout << endl;
+    BT.in_no_rec();
+    cout << endl;
+    BT.post(BT.getroot());
+    cout << endl;
+    BT.post_no_rec();
+    // BT.PrintTree();
     return 0;
 }
