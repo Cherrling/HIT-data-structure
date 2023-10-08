@@ -132,9 +132,9 @@ void readfile(string filename, string& content)
     // 读取第一行内容
     if (getline(file, line)) {
         content = line;
-        cout << "第一行内容: " << line << endl;
+        // cout << "第一行内容: " << line << endl;
     } else {
-        cerr << "文件为空" << endl;
+        // cerr << "文件为空" << endl;
     }
 
     file.close(); // 关闭文件
@@ -200,6 +200,8 @@ int main()
 {
     string content;
     readfile("content.txt", content);
+    cout<<"源文本："<<content<<endl;
+    cout<<endl;
     map<char, int> charCount;
     // 遍历输入字符串
     for (char c : content) {
@@ -215,6 +217,8 @@ int main()
     for (const auto& pair : charCount) {
         cout << "字符 '" << pair.first << "' 出现了 " << pair.second << " 次" << std::endl;
     }
+    cout<<endl;
+
     int size = charCount.size();
     TreeNode* chars[size];
     int i = 0;
@@ -254,21 +258,24 @@ int main()
         }
     }
     // PrintTree(Huffman, 0);
-    
+
     map<char, string> Huffmanmap;
 
     Huffman_str(Huffman, "", Huffmanmap);
 
     for (const auto& pair : Huffmanmap) {
-        cout << "字符" << pair.first << "编码：" << pair.second << std::endl;
+        cout << "字符 '" << pair.first << "' 编码：" << pair.second << std::endl;
     }
+    cout<<endl;
 
     string archive = "";
     for (auto i : content) {
         archive += Huffmanmap[i];
     }
-    cout << archive<<endl;
+    cout<<"哈夫曼编码：" << archive<<endl;
+    cout<<endl;
     string txt=decode(archive, Huffman);
-    cout<<txt;
+    cout<<"解码后源文件："<<txt<<endl;
+    cout<<endl;
     return 0;
 }
