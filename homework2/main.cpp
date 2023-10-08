@@ -5,7 +5,6 @@
 
 using namespace std;
 
-#include "stack"
 // A(B(D,E(G,)),C(,F))#
 class TreeNode {
 public:
