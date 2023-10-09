@@ -139,7 +139,40 @@ void readfile(string filename, string& content)
 
     file.close(); // 关闭文件
 }
+void readBfile(string filename, string& content)
+{
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) {
+        cerr << "无法打开文件" << endl;
+    }
 
+    string line = "";
+
+    // 读取第一行内容
+    char bit;
+    while (file.get(bit)) {
+        for (int i = 7; i >= 0; --i) {
+            // 使用位运算检查并提取每个位的值
+            char t = (bit & (1 << i)) ? '1' : '0';
+            line += t;
+        }
+    }
+    file.close(); // 关闭文件
+    int NULLCount=0;
+    string last8Characters = line.substr(line.length() - 8);
+    int binaryBase = 1; // 二进制的基数
+
+    // 从右到左遍历二进制字符串
+    for (int i = last8Characters.length() - 1; i >= 0; --i) {
+        if (last8Characters[i] == '1') {
+            NULLCount += binaryBase;
+        }
+        binaryBase *= 2; // 更新二进制的基数，相当于左移一位
+    }
+
+    NULLCount+=8;
+    content=line.substr(0, line.length() - NULLCount);
+}
 int getarrcnt(TreeNode* chars[], int size)
 {
     int cnt = 0;
@@ -232,6 +265,7 @@ void write_into_Bfile(const string& filename, const string& archive)
             currentByte <<= (8 - bitCount);
             packedData.push_back(currentByte);
         }
+        packedData.push_back(8-bitCount);
 
         // 将打包后的数据写入二进制文件
         binaryFile.write(packedData.data(), packedData.size());
@@ -242,7 +276,8 @@ void write_into_Bfile(const string& filename, const string& archive)
     }
 }
 
-double calculateCompressionRate(const string& filename, const string& archive) {
+double calculateCompressionRate(const string& filename, const string& archive)
+{
     // 打开原始文件
     ifstream originalFile(filename, ios::binary | ios::ate);
     if (!originalFile.is_open()) {
@@ -271,15 +306,13 @@ double calculateCompressionRate(const string& filename, const string& archive) {
     return compressionRate;
 }
 
-
-
-
-
 int main()
 {
+
     string content;
     readfile("content.txt", content);
-    cout << "源文本：" <<endl<< content << endl;
+    cout << "源文本：" << endl
+         << content << endl;
     cout << endl;
     map<char, int> charCount;
     // 遍历输入字符串
@@ -351,15 +384,22 @@ int main()
     for (auto i : content) {
         archive += Huffmanmap[i];
     }
-    cout << "哈夫曼编码："<<endl << archive << endl;
+    cout << "哈夫曼编码：" << endl
+         << archive << endl;
     write_into_Bfile("archive.bin", archive);
     cout << endl;
-    string txt = decode(archive, Huffman);
-    cout << "解码后源文件：" <<endl<< txt << endl;
+    string readfromBfile;
+    readBfile("archive.bin", readfromBfile);
+    // cout<<readfromBfile<<endl;
+
+    // string txt = decode(archive, Huffman);
+    string txt = decode(readfromBfile, Huffman);
+    cout << "解码后源文件：" << endl
+         << txt << endl;
     cout << endl;
     double compressionRate = calculateCompressionRate("content.txt", "archive.bin");
     if (compressionRate >= 0.0) {
-        std::cout << "压缩率为: "  << compressionRate << "%" << std::endl;
+        std::cout << "压缩率为: " << compressionRate << "%" << std::endl;
     }
     return 0;
 }
