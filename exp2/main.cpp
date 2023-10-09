@@ -5,7 +5,7 @@
 #include <queue>
 #include <stack>
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class TreeNode {
@@ -181,7 +181,7 @@ string decode(string archive, TreeNode* root)
     string content = "";
     TreeNode* curr = root;
     for (auto i : archive) {
-        if (i=='0') {
+        if (i == '0') {
             curr = curr->left;
         } else {
             curr = curr->right;
@@ -196,12 +196,91 @@ string decode(string archive, TreeNode* root)
     return content;
 }
 
+void write_into_Bfile(const string& filename, const string& archive)
+{
+    ofstream binaryFile(filename, ios::binary | ios::out | ios::trunc); // 打开二进制文件并清空
+    if (binaryFile.is_open()) {
+        vector<char> packedData; // 用于存储打包后的数据
+
+        char currentByte = 0; // 当前字节
+        int bitCount = 0; // 记录当前字节中已经写入的位数
+
+        for (size_t i = 0; i < archive.length(); i++) {
+            char bit = archive[i];
+            if (bit == '0') {
+                currentByte <<= 1; // 将当前字节左移一位
+            } else if (bit == '1') {
+                currentByte = currentByte << 1;
+                currentByte = currentByte | 1; // 在当前字节最低位置1
+            } else {
+                cerr << "无效的字符：" << bit << endl;
+                return; // 退出函数以避免写入无效数据
+            }
+
+            bitCount++;
+
+            // 如果当前字节已经装满8位，则将其添加到容器并重置
+            if (bitCount == 8) {
+                packedData.push_back(currentByte);
+                currentByte = 0;
+                bitCount = 0;
+            }
+        }
+
+        // 如果还有未装满的字节，将其添加到容器
+        if (bitCount > 0) {
+            currentByte <<= (8 - bitCount);
+            packedData.push_back(currentByte);
+        }
+
+        // 将打包后的数据写入二进制文件
+        binaryFile.write(packedData.data(), packedData.size());
+        binaryFile.close();
+        cout << "二进制文件写入成功" << endl;
+    } else {
+        cerr << "无法打开文件" << endl;
+    }
+}
+
+double calculateCompressionRate(const string& filename, const string& archive) {
+    // 打开原始文件
+    ifstream originalFile(filename, ios::binary | ios::ate);
+    if (!originalFile.is_open()) {
+        cerr << "无法打开原始文件" << endl;
+        return -1.0;
+    }
+
+    // 获取原始文件的大小
+    streampos originalFileSize = originalFile.tellg();
+    originalFile.close();
+
+    // 打开压缩后的文件
+    ifstream compressedFile(archive, ios::binary | ios::ate);
+    if (!compressedFile.is_open()) {
+        cerr << "无法打开压缩后的文件" << endl;
+        return -1.0;
+    }
+
+    // 获取压缩后文件的大小
+    streampos compressedFileSize = compressedFile.tellg();
+    compressedFile.close();
+
+    // 计算压缩率（百分比）
+    double compressionRate = (1.0 - static_cast<double>(compressedFileSize) / static_cast<double>(originalFileSize)) * 100.0;
+
+    return compressionRate;
+}
+
+
+
+
+
 int main()
 {
     string content;
     readfile("content.txt", content);
-    cout<<"源文本："<<content<<endl;
-    cout<<endl;
+    cout << "源文本：" <<endl<< content << endl;
+    cout << endl;
     map<char, int> charCount;
     // 遍历输入字符串
     for (char c : content) {
@@ -217,7 +296,7 @@ int main()
     for (const auto& pair : charCount) {
         cout << "字符 '" << pair.first << "' 出现了 " << pair.second << " 次" << std::endl;
     }
-    cout<<endl;
+    cout << endl;
 
     int size = charCount.size();
     TreeNode* chars[size];
@@ -266,16 +345,21 @@ int main()
     for (const auto& pair : Huffmanmap) {
         cout << "字符 '" << pair.first << "' 编码：" << pair.second << std::endl;
     }
-    cout<<endl;
+    cout << endl;
 
     string archive = "";
     for (auto i : content) {
         archive += Huffmanmap[i];
     }
-    cout<<"哈夫曼编码：" << archive<<endl;
-    cout<<endl;
-    string txt=decode(archive, Huffman);
-    cout<<"解码后源文件："<<txt<<endl;
-    cout<<endl;
+    cout << "哈夫曼编码："<<endl << archive << endl;
+    write_into_Bfile("archive.bin", archive);
+    cout << endl;
+    string txt = decode(archive, Huffman);
+    cout << "解码后源文件：" <<endl<< txt << endl;
+    cout << endl;
+    double compressionRate = calculateCompressionRate("content.txt", "archive.bin");
+    if (compressionRate >= 0.0) {
+        std::cout << "压缩率为: "  << compressionRate << "%" << std::endl;
+    }
     return 0;
 }
