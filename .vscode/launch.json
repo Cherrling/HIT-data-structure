@@ -13,7 +13,8 @@
             "externalConsole": false, // 调试时是否显示控制台窗口，一般设置为true显示控制台
             "MIMode": "gdb", // 指定连接的调试器，可以为gdb或lldb。但目前lldb在windows下没有预编译好的版本。
             "miDebuggerPath": "gdb", // 调试器路径。 
-            "preLaunchTask": "clang" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的taskName相对应 
+            // "preLaunchTask": "clang" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的taskName相对应 
+            "preLaunchTask": "g++" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的taskName相对应 
         }
     ]
 }

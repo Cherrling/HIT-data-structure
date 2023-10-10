@@ -121,7 +121,7 @@ void PrintTree(TreeNode* root, int indent = 0)
 
 void readfile(string filename, string& content)
 {
-    ifstream file(filename); // 打开文件以供读取
+    ifstream file(filename); // 打开文件
 
     if (!file.is_open()) {
         cerr << "无法打开文件" << endl;
@@ -160,14 +160,14 @@ void readBfile(string filename, string& content)
     file.close(); // 关闭文件
     int NULLCount=0;
     string last8Characters = line.substr(line.length() - 8);
-    int binaryBase = 1; // 二进制的基数
+    int binaryBase = 1; // 二进制的基数每次乘2
 
     // 从右到左遍历二进制字符串
     for (int i = last8Characters.length() - 1; i >= 0; --i) {
         if (last8Characters[i] == '1') {
             NULLCount += binaryBase;
         }
-        binaryBase *= 2; // 更新二进制的基数，相当于左移一位
+        binaryBase *= 2; // 更新二进制的基数
     }
 
     NULLCount+=8;
@@ -315,9 +315,9 @@ int main()
          << content << endl;
     cout << endl;
     map<char, int> charCount;
-    // 遍历输入字符串
     for (char c : content) {
-        // 如果字符已经在map中，增加计数，否则添加新字符并初始化计数为1
+        // 如果字符已经在map中，增加计数，
+        //否则添加新字符并初始化计数为1
         if (charCount.find(c) != charCount.end()) {
             charCount[c]++;
         } else {
@@ -386,6 +386,8 @@ int main()
     }
     cout << "哈夫曼编码：" << endl
          << archive << endl;
+
+         
     write_into_Bfile("archive.bin", archive);
     cout << endl;
     string readfromBfile;
