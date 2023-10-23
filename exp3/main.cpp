@@ -275,14 +275,14 @@ int main()
 
 while (1)
     {
+        printf("0.退出\n");
         printf("1.Dijkstra 算法，输出源点及其到其他顶点的最短路径长度和最短路径。\n");
-        printf("2.Floyd-Warshall算法。输出任意两个顶点间的最短路径长度和最短路径。\n");
-        printf("3.Floyd-Warshall算法。找出图中每个顶点 v 到某个指定顶点 w 最短路径。\n");
-        printf("4.Floyd-Warshall算法。对于某对顶点 u 和 v, 找出 u 到 v 和 v 到 u 的一条最短路径。\n");
-        printf("5.退出\n");
+        printf("2.Floyd-Warshall算法,输出任意两个顶点间的最短路径长度和最短路径。\n");
+        printf("3.Floyd-Warshall算法,找出图中每个顶点 v 到某个指定顶点 w 最短路径。\n");
+        printf("4.Floyd-Warshall算法,对于某对顶点 u 和 v, 找出 u 到 v 和 v 到 u 的一条最短路径。\n");
         char c;
-        scanf("%d" , &c);
-        if (c == 5)
+        cin>>c;
+        if (c == 0)
             break;        
         switch (c)
         {
@@ -302,12 +302,12 @@ while (1)
             FloydWarshall(graph,end);
             break;
         case 4:
-        int u,v;
-        cout<<"u,v:";
-        cin>>u>>v;
-            FloydWarshall(graph,u,v);
-        }
-        printf("\n\n");
+            int u,v;
+            cout<<"u,v:";
+            cin>>u>>v;
+                FloydWarshall(graph,u,v);
+            }
+            printf("\n\n");
 
     }
 
