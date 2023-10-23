@@ -22,7 +22,7 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}.exe",
-                // "-g",
+                "-g",
                 // "-Wall",
                 // "-static-libgcc",
                 // "-fcolor-diagnostics",
