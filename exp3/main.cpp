@@ -281,7 +281,8 @@ while (1)
         printf("3.Floyd-Warshall算法,找出图中每个顶点 v 到某个指定顶点 w 最短路径。\n");
         printf("4.Floyd-Warshall算法,对于某对顶点 u 和 v, 找出 u 到 v 和 v 到 u 的一条最短路径。\n");
         char c;
-        cin>>c;
+        scanf("%d" , &c);
+        // cin>>c;
         if (c == 0)
             break;        
         switch (c)
@@ -302,12 +303,12 @@ while (1)
             FloydWarshall(graph,end);
             break;
         case 4:
-            int u,v;
-            cout<<"u,v:";
-            cin>>u>>v;
-                FloydWarshall(graph,u,v);
-            }
-            printf("\n\n");
+        int u,v;
+        cout<<"u,v:";
+        cin>>u>>v;
+            FloydWarshall(graph,u,v);
+        }
+        printf("\n\n");
 
     }
 
