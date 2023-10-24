@@ -248,23 +248,20 @@ int main()
 {
     int n, m;
 
-
-    FILE* f = fopen("graph.txt" , "r");
-    fscanf(f , "%d %d" , &n , &m);
+    FILE* f = fopen("graph.txt", "r");
+    fscanf(f, "%d %d", &n, &m);
     vector<vector<int>> graph(n, vector<int>(n, INF));
 
-    int x , y , z;
-    for (int i = 1 ; i <= m ; i++)
-    {
-        fscanf(f , "%d %d %d", &x ,&y ,&z);
-        graph[x][y]=z;
+    int source, dest, weight;
+    for (int i = 1; i <= m; i++) {
+        fscanf(f, "%d %d %d", &source, &dest, &weight);
+        graph[source][dest] = weight;
     }
 
     // cout << "Enter the number of vertices: ";
     // cin >> n;
     // cout << "Enter the number of edges: ";
     // cin >> m;
-
 
     // cout << "Enter edge information (source, destination, weight):" << endl;
     // for (int i = 0; i < m; i++) {
@@ -273,24 +270,22 @@ int main()
     //     graph[source][dest] = weight;
     // }
 
-while (1)
-    {
+    while (1) {
         printf("0.退出\n");
         printf("1.Dijkstra 算法，输出源点及其到其他顶点的最短路径长度和最短路径。\n");
         printf("2.Floyd-Warshall算法,输出任意两个顶点间的最短路径长度和最短路径。\n");
         printf("3.Floyd-Warshall算法,找出图中每个顶点 v 到某个指定顶点 w 最短路径。\n");
         printf("4.Floyd-Warshall算法,对于某对顶点 u 和 v, 找出 u 到 v 和 v 到 u 的一条最短路径。\n");
         char c;
-        scanf("%d" , &c);
+        scanf("%d", &c);
         // cin>>c;
         if (c == 0)
-            break;        
-        switch (c)
-        {
+            break;
+        switch (c) {
         case 1:
-            cout<<"Source:";
+            cout << "Source:";
             int source;
-            cin>>source;
+            cin >> source;
             Dijkstra(graph, source);
             break;
         case 2:
@@ -298,23 +293,18 @@ while (1)
             break;
         case 3:
             int end;
-            cout<<"Endpoint:";
-            cin>>end;
-            FloydWarshall(graph,end);
+            cout << "Endpoint:";
+            cin >> end;
+            FloydWarshall(graph, end);
             break;
         case 4:
-        int u,v;
-        cout<<"u,v:";
-        cin>>u>>v;
-            FloydWarshall(graph,u,v);
+            int u, v;
+            cout << "u,v:";
+            cin >> u >> v;
+            FloydWarshall(graph, u, v);
         }
         printf("\n\n");
-
     }
-
-
-
-
 
     // // Dijkstra算法
     // int sourceDijkstra;
