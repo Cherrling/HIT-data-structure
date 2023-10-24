@@ -249,6 +249,7 @@ int main()
     int n, m;
 
     FILE* f = fopen("graph.txt", "r");
+    // FILE* f = fopen("graph copy.txt", "r");
     fscanf(f, "%d %d", &n, &m);
     vector<vector<int>> graph(n, vector<int>(n, INF));
 
