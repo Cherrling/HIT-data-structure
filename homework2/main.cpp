@@ -1,7 +1,7 @@
 #include <iostream>
+#include <queue>
 #include <stack>
 #include <string>
-#include <queue>
 #include <vector>
 
 using namespace std;
@@ -219,73 +219,68 @@ public:
         }
     }
 
-    void up_down(){
+    void up_down()
+    {
         queue<TreeNode*> q;
-        TreeNode* curr=root;
+        TreeNode* curr = root;
         q.push(curr);
         while (!q.empty()) {
-            curr=q.front();
+            curr = q.front();
             q.pop();
-                cout<<curr->data<<" ";
-            if (curr->left!=nullptr) {
+            cout << curr->data << " ";
+            if (curr->left != nullptr) {
                 q.push(curr->left);
             }
-            if (curr->right!=nullptr) {
+            if (curr->right != nullptr) {
                 q.push(curr->right);
             }
         }
-    
-    
     }
 
-bool isCompleteBinaryTree(TreeNode* root) {
-    if (root == nullptr) {
-        return true;
+    void isCompleteBinaryTree()
+    {
+        if (root == nullptr) {
+            cout << "It is Complete BinaryTree" << endl;
+            return;
+        }
+
+        queue<TreeNode*> q;
+        q.push(root);
+        bool hasNullChild = false;
+
+        while (!q.empty()) {
+            TreeNode* current = q.front();
+            q.pop();
+
+            if (current == nullptr) {
+                hasNullChild = true;
+            } else {
+                if (hasNullChild) {
+                    // 如果之前出现过空节点，但当前节点不为空，则不是完全二叉树
+                    cout << "It is not Complete BinaryTree" << endl;
+
+                    return;
+                }
+                q.push(current->left);
+                q.push(current->right);
+            }
+        }
+        cout << "It is Complete BinaryTree" << endl;
+
+        return;
     }
-
-    std::queue<TreeNode*> q;
-    q.push(root);
-
-    bool nonFullNodeFound = false; // 用于标记是否找到了不满的节点
-
-    while (!q.empty()) {
-        TreeNode* current = q.front();
-        q.pop();
-
-        // 如果找到了不满的节点，并且当前节点不是叶子节点，那么不是完全二叉树
-        if (nonFullNodeFound && (current->left || current->right)) {
-            return false;
-        }
-
-        // 如果当前节点只有左孩子，没有右孩子，那么标记已找到不满的节点
-        if (current->left && !current->right) {
-            nonFullNodeFound = true;
-        }
-
-        // 将孩子节点入队
-        if (current->left) {
-            q.push(current->left);
-        }
-        if (current->right) {
-            q.push(current->right);
-        }
-    }
-
-    // 如果遍历完所有节点，没有找到不满的节点，则是完全二叉树
-    return true;
-}
 
     void calc_width()
     {
-        int x=0;
-        vector<int>width;
+        int x = 0;
+        vector<int> width;
         width.push_back(0);
         queue<TreeNode*> q;
-        TreeNode* curr=root;
+        TreeNode* curr = root;
         q.push(curr);
         q.push(nullptr);
         while (!q.empty()) {
-            if (q.front()==nullptr) {
+            if (q.front() == nullptr) {
                 q.pop();
                 if (q.empty()) {
                     break;
@@ -295,26 +290,24 @@ bool isCompleteBinaryTree(TreeNode* root) {
                 width.push_back(0);
                 continue;
             }
-            curr=q.front();
+            curr = q.front();
             q.pop();
-            cout<<curr->data<<" ";
+            cout << curr->data << " ";
             width[x]++;
-            if (curr->left!=nullptr) {
+            if (curr->left != nullptr) {
                 q.push(curr->left);
             }
-            if (curr->right!=nullptr) {
+            if (curr->right != nullptr) {
                 q.push(curr->right);
             }
         }
+        cout << endl;
+        cout << "width:";
         for (int a : width) {
-        cout<<endl;
-            cout<<a<<" ";
+            cout << a << " ";
         }
+        cout << endl;
     }
-
-
-
-
 
     void PrintTree(TreeNode* n, bool left, string const& indent)
     {
@@ -353,7 +346,8 @@ int main()
     BTree BT;
     // BT.create("A(B(D,E(G,)),C(,F))#");
     // BT.pre_create("ABD#G###CE###");
-    BT.pre_create("ABDH##I##E##CF#J##G##");
+    // BT.pre_create("ABDH##I##E##CF#J##G##");
+    BT.pre_create("ABCH##D##OP##L##ER##T##");
     // BT.pre(BT.getroot());
     // cout << endl;
     // BT.pre_no_rec();
@@ -366,6 +360,7 @@ int main()
     // cout << endl;
     // BT.post_no_rec();
     // BT.up_down();
+    BT.isCompleteBinaryTree();
     BT.calc_width();
     BT.PrintTree();
     return 0;
