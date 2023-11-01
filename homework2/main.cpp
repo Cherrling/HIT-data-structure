@@ -359,7 +359,9 @@ int main()
     // BT.post(BT.getroot());
     // cout << endl;
     // BT.post_no_rec();
+    // cout << endl;
     // BT.up_down();
+    // cout << endl;
     BT.isCompleteBinaryTree();
     BT.calc_width();
     BT.PrintTree();
