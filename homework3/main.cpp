@@ -46,7 +46,7 @@ public:
         g[y][x] = 1;
     }
 
-    void trans()
+    void trans(int print)
     {
         for (int i = 0; i < v; i++) {
             vnode* curr = list[i];
@@ -58,18 +58,22 @@ public:
                 }
             }
         }
-        for (int i = 0; i < v; i++) {
-            vnode* curr = list[i];
 
-            for (int j = 0; j < v; j++) {
-                cout << curr->v;
-                if (curr->next == nullptr) {
-                    break;
+        if (print) {
+
+            for (int i = 0; i < v; i++) {
+                vnode* curr = list[i];
+
+                for (int j = 0; j < v; j++) {
+                    cout << curr->v;
+                    if (curr->next == nullptr) {
+                        break;
+                    }
+                    curr = curr->next;
+                    cout << "->";
                 }
-                curr = curr->next;
-                cout << "->";
+                cout << endl;
             }
-            cout << endl;
         }
         cout << "graph to list finished" << endl;
 
@@ -86,7 +90,9 @@ public:
                 p = p->next;
             }
         }
-        display();
+        if (print) {
+            display();
+        }
         cout << "graph to matrix finished" << endl;
     }
 
@@ -126,19 +132,19 @@ public:
 
     queue<int> q;
 
-    void g_bfs(int now) // 邻接矩阵bfs
+    void g_bfs(int curr) // 邻接矩阵bfs
     {
         for (int i = 0; i < visited.size(); i++) {
             visited[i] = 0;
         }
-        q.push(now);
-        cout << now << " ";
-        visited[now] = 1;
+        q.push(curr);
+        cout << curr << "->";
+        visited[curr] = 1;
         while (!q.empty()) {
-            now = q.front();
+            curr = q.front();
             q.pop();
-            for (int i = 1; i <= v; i++) {
-                if (!visited[i] && g[now][i]) {
+            for (int i = 0; i < v; i++) {
+                if (!visited[i] && g[curr][i]) {
                     q.push(i);
                     visited[i] = 1;
                     cout << i << "->";
@@ -151,11 +157,82 @@ public:
         }
     }
 
+    void list_dfs(int curr)
+    {
+        visited[curr] = 1;
+        cout << curr << "->";
+        vnode* p = list[curr]->next;
+        while (1) {
+            if (p == nullptr) {
+                break;
+            }
+            if (!visited[p->v]) {
+                list_dfs(p->v);
+            }
+            p = p->next;
+        }
+    }
+
+void list_dfs_no_rec(int curr)//邻接表dfs(非递归版)
+{
+    cout<<curr<<"->";
+    s.push(curr);
+    visited[curr] = 1;
+    while (!s.empty()) {
+        curr = s.top();
+        vnode *p = list[curr]->next;
+        while (p != NULL) {
+            if (!visited[p->v]) {
+                s.push(p->v);
+                visited[p->v] = 1;
+                cout<<p->v<<"->";
+                break;
+            }
+            p = p->next;
+            if (p == NULL) {
+                s.pop();
+            }
+        }
+    }
+}
 
 
 
+void list_bfs(int curr)//邻接表bfs
+{
+    q.push(curr);
+    visited[curr] = 1;
+    cout<<curr<<" ";
+    while (!q.empty()) {
+        curr = q.front();
+        q.pop();
+        vnode *p = list[curr]->next;
+        while (p != NULL) {
+            if (!visited[p->v]) {
+                q.push(p->v);
+                visited[p->v] = 1;
+                cout<<p->v<<" ";
+            }
+            p = p->next;
+        }
+        
+    }
+}
 
 
+void cal()//计算顶点的度
+{
+    int cnt = 0;
+    for (int i = 0; i < v ; i++) {
+        cnt = 0;
+        vnode *p = list[i]->next;
+        while (p != NULL) {
+            cnt++;
+            p = p->next;
+        }
+        printf("\n%d的度为: %d" , i , cnt);
+    }
+}
 
 
     void display()
@@ -190,17 +267,15 @@ int main()
     }
 
     g.display();
+    g.trans(0);
     // g.g_dfs(0);
+    cout << endl;
     // g.g_dfs_no_rec(0);
     // g.g_bfs(0);
-
-
-
-
-
-    
-    // g.trans();
-
+    // g.list_dfs(0);
+    // g.list_dfs_no_rec(0);
+    g.list_bfs(0);
+    g.cal();
     return 0;
     // 5 8 0 3 30 0 1 10 1 2 50 2 4 10 2 3 20 3 2 20 3 4 60 0 4 100
 }
