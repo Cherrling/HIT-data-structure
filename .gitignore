@@ -8,3 +8,4 @@ exp1/main.exe
 .vscode
 .vscode/launch.json
 .vscode/tasks.json
+*.zip
